@@ -11,7 +11,8 @@ const supportedEvents = ['check_run', 'workflow_job'];
 const logger = rootLogger.getChildLogger();
 
 export async function handle(headers: IncomingHttpHeaders, body: string): Promise<Response> {
-  const { environment, repositoryWhiteList, enableWorkflowLabelCheck, workflowLabelCheckAll, runnerLabels } = readEnvironmentVariables();
+  const { environment, repositoryWhiteList, enableWorkflowLabelCheck, workflowLabelCheckAll, runnerLabels } =
+    readEnvironmentVariables();
 
   // ensure header keys lower case since github headers can contain capitals.
   for (const key in headers) {
@@ -178,8 +179,8 @@ function isRepoNotAllowed(repoFullName: string, repositoryWhiteList: string[]): 
 function canRunJob(job: WorkflowJobEvent, runnerLabels: string[], workflowLabelCheckAll: boolean): boolean {
   const workflowJobLabels = job.workflow_job.labels;
   let runnerMatch;
-  let jobMatch
-  if(workflowLabelCheckAll) {
+  let jobMatch;
+  if (workflowLabelCheckAll) {
     runnerMatch = runnerLabels.every((l) => workflowJobLabels.includes(l));
     jobMatch = workflowJobLabels.every((l) => runnerLabels.includes(l));
   } else {
